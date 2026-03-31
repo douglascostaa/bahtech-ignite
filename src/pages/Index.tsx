@@ -43,14 +43,10 @@ const slideComponents = [
   () => <SlideMindset num={17} total={TOTAL} />,
   () => <SlideMitos num={18} total={TOTAL} />,
   () => <SlideRoadmap num={19} total={TOTAL} />,
-  // Slide 20 removed from TOTAL count — it's the final outro
+  () => <SlideConclusao num={20} total={TOTAL} />,
 ];
 
-// Actually we have 20 slides, let me include the conclusion
-const allSlides = [
-  ...slideComponents,
-  () => <SlideConclusao num={20} total={20} />,
-];
+const allSlides = slideComponents;
 
 const TOTAL_SLIDES = allSlides.length;
 
