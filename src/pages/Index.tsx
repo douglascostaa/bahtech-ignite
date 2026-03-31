@@ -21,7 +21,7 @@ import SlideMitos from "@/components/slides/SlideMitos";
 import SlideRoadmap from "@/components/slides/SlideRoadmap";
 import SlideConclusao from "@/components/slides/SlideConclusao";
 
-const TOTAL = 19;
+const TOTAL = 20;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
