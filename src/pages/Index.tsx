@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Maximize, Minimize, Grid3X3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize, Minimize, Grid3X3, Pencil } from "lucide-react";
 import SlideCover from "@/components/slides/SlideCover";
 import SlideErro2020 from "@/components/slides/SlideErro2020";
 import SlideAlicerce from "@/components/slides/SlideAlicerce";
@@ -20,6 +20,7 @@ import SlideMindset from "@/components/slides/SlideMindset";
 import SlideMitos from "@/components/slides/SlideMitos";
 import SlideRoadmap from "@/components/slides/SlideRoadmap";
 import SlideConclusao from "@/components/slides/SlideConclusao";
+import EditMode from "@/components/EditMode";
 
 const TOTAL = 20;
 
@@ -46,17 +47,117 @@ const slideComponents = [
   () => <SlideConclusao num={20} total={TOTAL} />,
 ];
 
-const allSlides = slideComponents;
+const slideNames = [
+  "Capa — Do Código ao CNPJ",
+  "O Erro de 2020",
+  "O Alicerce Técnico",
+  "A Escada do Dev",
+  "O Pulo do Gato",
+  "BahTech Hoje",
+  "Divisor — Módulo 02",
+  "A Morte dos 5 Minutinhos",
+  "O Júnior 2.0",
+  "Obesidade de IA",
+  "IA como Alavanca",
+  "Dev-Founder",
+  "O Desafio Eterno",
+  "Divisor — Módulo 03",
+  "Projetos BahTech",
+  "Estudar de Forma Inteligente",
+  "Mindset de Oportunidade",
+  "Mitos Tech",
+  "Roadmap Pessoal",
+  "Conclusão & Networking",
+];
 
-const TOTAL_SLIDES = allSlides.length;
+const slideEditableFields: { [idx: number]: { field: string; label: string; value: string }[] } = {
+  0: [
+    { field: "subtitle", label: "Subtítulo", value: "BahTech • 2025" },
+    { field: "title", label: "Título", value: "Do Código ao CNPJ" },
+    { field: "desc", label: "Descrição", value: "Construindo a BahTech" },
+    { field: "author", label: "Autor", value: "Douglas Costa" },
+    { field: "role", label: "Cargo", value: "CEO & Founder, BahTech" },
+  ],
+  1: [
+    { field: "title", label: "Título", value: "O Erro de 2020" },
+    { field: "quote", label: "Citação", value: "Criei uma agência WordPress sem saber programar. E sem saber vender." },
+  ],
+  2: [
+    { field: "title", label: "Título", value: "O Alicerce Técnico" },
+    { field: "desc", label: "Descrição", value: "Programa Data4Care com Prof. Leonel" },
+  ],
+  3: [
+    { field: "title", label: "Título", value: "A Escada do Dev" },
+    { field: "desc", label: "Descrição", value: "Trajetória na Compass.UOL" },
+  ],
+  4: [
+    { field: "title", label: "Título", value: "O Pulo do Gato" },
+  ],
+  5: [
+    { field: "title", label: "Título", value: "BahTech Hoje" },
+    { field: "stat", label: "Estatística", value: "21 estados atendidos" },
+  ],
+  6: [
+    { field: "module", label: "Módulo", value: "Módulo 02" },
+    { field: "title", label: "Título", value: "O Novo Mercado" },
+    { field: "subtitle", label: "Subtítulo", value: "Tech & IA estão mudando tudo" },
+  ],
+  7: [
+    { field: "title", label: "Título", value: "A Morte dos '5 Minutinhos'" },
+  ],
+  8: [
+    { field: "title", label: "Título", value: "O Júnior 2.0" },
+  ],
+  9: [
+    { field: "title", label: "Título", value: "Obesidade de IA" },
+  ],
+  10: [
+    { field: "title", label: "Título", value: "IA como Alavanca" },
+  ],
+  11: [
+    { field: "title", label: "Título", value: "Dev-Founder" },
+  ],
+  12: [
+    { field: "title", label: "Título", value: "O Desafio Eterno" },
+  ],
+  13: [
+    { field: "module", label: "Módulo", value: "Módulo 03" },
+    { field: "title", label: "Título", value: "Visão de Futuro" },
+    { field: "subtitle", label: "Subtítulo", value: "O que vem pela frente" },
+  ],
+  14: [
+    { field: "title", label: "Título", value: "Projetos BahTech" },
+  ],
+  15: [
+    { field: "title", label: "Título", value: "Estudar de Forma Inteligente" },
+  ],
+  16: [
+    { field: "title", label: "Título", value: "Mindset de Oportunidade" },
+  ],
+  17: [
+    { field: "title", label: "Título", value: "Mitos Tech" },
+  ],
+  18: [
+    { field: "title", label: "Título", value: "Roadmap Pessoal" },
+  ],
+  19: [
+    { field: "title", label: "Título", value: "Conclusão & Networking" },
+    { field: "phrase", label: "Frase Final", value: "O futuro é de quem constrói" },
+  ],
+};
+
+const TOTAL_SLIDES = slideComponents.length;
 
 const Index = () => {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [direction, setDirection] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const [slideOrder, setSlideOrder] = useState<number[]>(() => Array.from({ length: TOTAL_SLIDES }, (_, i) => i));
+  const [textOverrides, setTextOverrides] = useState<{ [slideIndex: number]: { [field: string]: string } }>({});
 
   const updateScale = useCallback(() => {
     if (!containerRef.current) return;
@@ -80,7 +181,10 @@ const Index = () => {
     setDirection(idx > current ? 1 : -1);
     setCurrent(idx);
     setShowGrid(false);
+    setShowEdit(false);
   }, [current]);
+
+  const orderedSlides = slideOrder.map(i => slideComponents[i]);
 
   const next = useCallback(() => { if (current < TOTAL_SLIDES - 1) goTo(current + 1); }, [current, goTo]);
   const prev = useCallback(() => { if (current > 0) goTo(current - 1); }, [current, goTo]);
@@ -90,23 +194,52 @@ const Index = () => {
     else document.documentElement.requestFullscreen();
   }, []);
 
+  const handleTextChange = useCallback((slideIndex: number, field: string, value: string) => {
+    setTextOverrides(prev => ({
+      ...prev,
+      [slideIndex]: { ...prev[slideIndex], [field]: value },
+    }));
+  }, []);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      if (showEdit) {
+        // In edit mode, only ESC works
+        if (e.key === "Escape") { e.preventDefault(); setShowEdit(false); }
+        return;
+      }
       if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); next(); }
       if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
       if (e.key === "f" || e.key === "F5") { e.preventDefault(); toggleFullscreen(); }
       if (e.key === "Escape" && showGrid) setShowGrid(false);
       if (e.key === "g") setShowGrid(g => !g);
+      if (e.key === "e") { setShowEdit(true); setShowGrid(false); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [next, prev, toggleFullscreen, showGrid]);
+  }, [next, prev, toggleFullscreen, showGrid, showEdit]);
 
   const variants = {
     enter: (d: number) => ({ x: d > 0 ? 300 : -300, opacity: 0 }),
     center: { x: 0, opacity: 1 },
     exit: (d: number) => ({ x: d > 0 ? -300 : 300, opacity: 0 }),
   };
+
+  // Edit mode
+  if (showEdit) {
+    return (
+      <EditMode
+        slides={slideComponents}
+        slideOrder={slideOrder}
+        onClose={() => setShowEdit(false)}
+        onReorder={setSlideOrder}
+        textOverrides={textOverrides}
+        onTextChange={handleTextChange}
+        slideNames={slideNames}
+        slideEditableFields={slideEditableFields}
+      />
+    );
+  }
 
   if (showGrid) {
     return (
@@ -118,24 +251,29 @@ const Index = () => {
           </button>
         </div>
         <div className="grid grid-cols-4 gap-4">
-          {allSlides.map((Slide, i) => (
-            <button key={i} onClick={() => goTo(i)}
-              className={`relative overflow-hidden rounded-xl border-2 transition-all hover:border-accent
-                ${i === current ? 'border-accent shadow-lg shadow-accent/20' : 'border-border'}`}>
-              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                <div className="absolute inset-0" style={{ transform: `scale(${1 / 5})`, transformOrigin: 'top left', width: '500%', height: '500%' }}>
-                  <Slide />
+          {slideOrder.map((slideIdx, orderPos) => {
+            const Slide = slideComponents[slideIdx];
+            return (
+              <button key={orderPos} onClick={() => goTo(orderPos)}
+                className={`relative overflow-hidden rounded-xl border-2 transition-all hover:border-accent
+                  ${orderPos === current ? 'border-accent shadow-lg shadow-accent/20' : 'border-border'}`}>
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <div className="absolute inset-0" style={{ transform: `scale(${1 / 5})`, transformOrigin: 'top left', width: '500%', height: '500%' }}>
+                    <Slide />
+                  </div>
                 </div>
-              </div>
-              <div className="absolute bottom-2 left-2 bg-background/80 backdrop-blur-sm px-2 py-1 rounded text-xs text-foreground font-medium">
-                {i + 1}
-              </div>
-            </button>
-          ))}
+                <div className="absolute bottom-2 left-2 bg-background/80 backdrop-blur-sm px-2 py-1 rounded text-xs text-foreground font-medium">
+                  {orderPos + 1}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
     );
   }
+
+  const CurrentSlide = orderedSlides[current];
 
   return (
     <div ref={containerRef} className="relative w-screen h-screen bg-background overflow-hidden select-none cursor-default">
@@ -146,7 +284,7 @@ const Index = () => {
             variants={variants} initial="enter" animate="center" exit="exit"
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             style={{ transform: `scale(${scale})`, transformOrigin: 'center center' }}>
-            {allSlides[current]()}
+            {CurrentSlide()}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -168,7 +306,10 @@ const Index = () => {
           <ChevronRight className="w-5 h-5" />
         </button>
         <div className="w-px h-5 bg-border" />
-        <button onClick={() => setShowGrid(true)} className="p-2 rounded-full hover:bg-muted transition-colors text-foreground">
+        <button onClick={() => setShowEdit(true)} className="p-2 rounded-full hover:bg-muted transition-colors text-foreground" title="Editar (E)">
+          <Pencil className="w-4 h-4" />
+        </button>
+        <button onClick={() => setShowGrid(true)} className="p-2 rounded-full hover:bg-muted transition-colors text-foreground" title="Grid (G)">
           <Grid3X3 className="w-4 h-4" />
         </button>
         <button onClick={toggleFullscreen} className="p-2 rounded-full hover:bg-muted transition-colors text-foreground">
