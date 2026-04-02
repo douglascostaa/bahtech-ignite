@@ -21,12 +21,12 @@
     18,
     19,
     20,
-    21,
     22,
     23,
     24,
     25,
     26,
+    21,
     27,
     28,
     29
@@ -38,6 +38,9 @@
     },
     "1": {
       "quote": "Criamos uma agência para desenvolver sites utilizando WordPress sem saber programar. E sem saber vender."
+    },
+    "29": {
+      "desc": "Tenho um medo  de ficar pra trás e isso me faz buscar, estudar e construir sem parar."
     }
   }
 }
