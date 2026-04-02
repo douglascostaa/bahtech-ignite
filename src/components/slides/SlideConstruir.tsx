@@ -1,0 +1,55 @@
+import { motion } from "framer-motion";
+import SlideLayout from "../SlideLayout";
+import SlideNumber from "../SlideNumber";
+import { Quote } from "lucide-react";
+
+const SlideConstruir = ({ num, total }: { num: number; total: number }) => (
+  <SlideLayout>
+    {/* Gradient background accent */}
+    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/5 to-pink-600/10" />
+
+    <div className="relative z-10 flex flex-col justify-center h-full px-[140px]">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="text-slide-accent text-[18px] font-medium tracking-[0.25em] uppercase mb-8">Módulo 02</div>
+        <h2 className="font-display text-[76px] font-bold leading-[1.05] text-foreground mb-16">
+          A construção é a nova<br/>forma de <span className="slide-gradient-text">comunicação</span>
+        </h2>
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }} className="max-w-[900px]">
+        {/* Tweet card */}
+        <div className="bg-slide-surface border border-border rounded-3xl p-12 relative">
+          <Quote className="w-10 h-10 text-slide-accent/30 absolute top-8 right-8" />
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              <span className="text-white font-bold text-[20px]">MG</span>
+            </div>
+            <div>
+              <div className="text-[22px] font-semibold text-foreground flex items-center gap-2">
+                Madhu Guru
+                <span className="text-slide-accent text-[16px]">✓</span>
+              </div>
+              <div className="text-[16px] text-slide-gray">@realmadhuguru</div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-[22px] text-foreground leading-relaxed">
+              "No Google, estamos passando de uma cultura de <span className="text-slide-accent font-semibold">"escrever primeiro"</span> para uma de <span className="text-slide-accent font-semibold">"construir primeiro"</span>."
+            </p>
+            <p className="text-[20px] text-slide-gray-light leading-relaxed">
+              Quando o tempo para prototipar em vibe-code ≈ o tempo para escrever um PRD, PMs podem <span className="text-foreground font-medium">mostrar</span>, não apenas dizer.
+            </p>
+            <p className="text-[20px] text-slide-gray-light leading-relaxed">
+              Os perfis de função estão se misturando; criatividade e execução estão acontecendo em paralelo.
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+    <SlideNumber current={num} total={total} />
+  </SlideLayout>
+);
+
+export default SlideConstruir;

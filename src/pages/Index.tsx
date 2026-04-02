@@ -20,9 +20,12 @@ import SlideMindset from "@/components/slides/SlideMindset";
 import SlideMitos from "@/components/slides/SlideMitos";
 import SlideRoadmap from "@/components/slides/SlideRoadmap";
 import SlideConclusao from "@/components/slides/SlideConclusao";
+import SlideProcessoReal from "@/components/slides/SlideProcessoReal";
+import SlideConvergencia from "@/components/slides/SlideConvergencia";
+import SlideConstruir from "@/components/slides/SlideConstruir";
 import EditMode from "@/components/EditMode";
 
-const TOTAL = 20;
+const TOTAL = 23;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
@@ -33,18 +36,21 @@ const slideComponents = [
   () => <SlideBahTechHoje num={6} total={TOTAL} />,
   () => <SlideModuloDivider num={7} total={TOTAL} module="Módulo 02" title="O Novo Mercado" subtitle="Tech & IA estão mudando tudo" />,
   () => <SlideMorte5Min num={8} total={TOTAL} />,
-  () => <SlideJunior2 num={9} total={TOTAL} />,
-  () => <SlideObesidade num={10} total={TOTAL} />,
-  () => <SlideAlavanca num={11} total={TOTAL} />,
-  () => <SlideDevFounder num={12} total={TOTAL} />,
-  () => <SlideDesafioEterno num={13} total={TOTAL} />,
-  () => <SlideModuloDivider num={14} total={TOTAL} module="Módulo 03" title="Visão de Futuro" subtitle="O que vem pela frente" />,
-  () => <SlideProjetos num={15} total={TOTAL} />,
-  () => <SlideEstudar num={16} total={TOTAL} />,
-  () => <SlideMindset num={17} total={TOTAL} />,
-  () => <SlideMitos num={18} total={TOTAL} />,
-  () => <SlideRoadmap num={19} total={TOTAL} />,
-  () => <SlideConclusao num={20} total={TOTAL} />,
+  () => <SlideProcessoReal num={9} total={TOTAL} />,
+  () => <SlideConvergencia num={10} total={TOTAL} />,
+  () => <SlideConstruir num={11} total={TOTAL} />,
+  () => <SlideJunior2 num={12} total={TOTAL} />,
+  () => <SlideObesidade num={13} total={TOTAL} />,
+  () => <SlideAlavanca num={14} total={TOTAL} />,
+  () => <SlideDevFounder num={15} total={TOTAL} />,
+  () => <SlideDesafioEterno num={16} total={TOTAL} />,
+  () => <SlideModuloDivider num={17} total={TOTAL} module="Módulo 03" title="Visão de Futuro" subtitle="O que vem pela frente" />,
+  () => <SlideProjetos num={18} total={TOTAL} />,
+  () => <SlideEstudar num={19} total={TOTAL} />,
+  () => <SlideMindset num={20} total={TOTAL} />,
+  () => <SlideMitos num={21} total={TOTAL} />,
+  () => <SlideRoadmap num={22} total={TOTAL} />,
+  () => <SlideConclusao num={23} total={TOTAL} />,
 ];
 
 const slideNames = [
@@ -56,6 +62,9 @@ const slideNames = [
   "BahTech Hoje",
   "Divisor — Módulo 02",
   "A Morte dos 5 Minutinhos",
+  "O Processo Real",
+  "A Convergência dos Papéis",
+  "Construir é Comunicar",
   "O Júnior 2.0",
   "Obesidade de IA",
   "IA como Alavanca",
@@ -106,41 +115,50 @@ const slideEditableFields: { [idx: number]: { field: string; label: string; valu
     { field: "title", label: "Título", value: "A Morte dos '5 Minutinhos'" },
   ],
   8: [
-    { field: "title", label: "Título", value: "O Júnior 2.0" },
+    { field: "title", label: "Título", value: "O Processo Real de Software" },
   ],
   9: [
-    { field: "title", label: "Título", value: "Obesidade de IA" },
+    { field: "title", label: "Título", value: "A Convergência dos Papéis" },
   ],
   10: [
-    { field: "title", label: "Título", value: "IA como Alavanca" },
+    { field: "title", label: "Título", value: "Construir é a Nova Comunicação" },
   ],
   11: [
-    { field: "title", label: "Título", value: "Dev-Founder" },
+    { field: "title", label: "Título", value: "O Júnior 2.0" },
   ],
   12: [
-    { field: "title", label: "Título", value: "O Desafio Eterno" },
+    { field: "title", label: "Título", value: "Obesidade de IA" },
   ],
   13: [
+    { field: "title", label: "Título", value: "IA como Alavanca" },
+  ],
+  14: [
+    { field: "title", label: "Título", value: "Dev-Founder" },
+  ],
+  15: [
+    { field: "title", label: "Título", value: "O Desafio Eterno" },
+  ],
+  16: [
     { field: "module", label: "Módulo", value: "Módulo 03" },
     { field: "title", label: "Título", value: "Visão de Futuro" },
     { field: "subtitle", label: "Subtítulo", value: "O que vem pela frente" },
   ],
-  14: [
+  17: [
     { field: "title", label: "Título", value: "Projetos BahTech" },
   ],
-  15: [
+  18: [
     { field: "title", label: "Título", value: "Estudar de Forma Inteligente" },
   ],
-  16: [
+  19: [
     { field: "title", label: "Título", value: "Mindset de Oportunidade" },
   ],
-  17: [
+  20: [
     { field: "title", label: "Título", value: "Mitos Tech" },
   ],
-  18: [
+  21: [
     { field: "title", label: "Título", value: "Roadmap Pessoal" },
   ],
-  19: [
+  22: [
     { field: "title", label: "Título", value: "Conclusão & Networking" },
     { field: "phrase", label: "Frase Final", value: "O futuro é de quem constrói" },
   ],
