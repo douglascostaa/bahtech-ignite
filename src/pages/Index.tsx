@@ -15,7 +15,6 @@ import SlideObesidade from "@/components/slides/SlideObesidade";
 import SlideAlavanca from "@/components/slides/SlideAlavanca";
 import SlideDevFounder from "@/components/slides/SlideDevFounder";
 import SlideDesafioEterno from "@/components/slides/SlideDesafioEterno";
-import SlideProjetos from "@/components/slides/SlideProjetos";
 import SlideEstudar from "@/components/slides/SlideEstudar";
 import SlideMindset from "@/components/slides/SlideMindset";
 import SlideMitos from "@/components/slides/SlideMitos";
@@ -34,7 +33,7 @@ import SlideBahFlashDashboard from "@/components/slides/SlideBahFlashDashboard";
 import SlideBahVitrine from "@/components/slides/SlideBahVitrine";
 import SlidePersonalidade from "@/components/slides/SlidePersonalidade";
 
-const TOTAL = 31;
+const TOTAL = 30;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
@@ -54,20 +53,19 @@ const slideComponents = [
   () => <SlideDevFounder num={15} total={TOTAL} />,
   () => <SlideDesafioEterno num={16} total={TOTAL} />,
   () => <SlideModuloDivider num={17} total={TOTAL} slideIndex={16} module="Módulo 03" title="Visão de Futuro" subtitle="O que vem pela frente" />,
-  () => <SlideProjetos num={18} total={TOTAL} />,
-  () => <SlideEstudar num={19} total={TOTAL} />,
-  () => <SlideMindset num={20} total={TOTAL} />,
-  () => <SlideMitos num={21} total={TOTAL} />,
-  () => <SlideRoadmap num={22} total={TOTAL} />,
-  () => <SlideConclusao num={23} total={TOTAL} />,
-  () => <SlideData4Care num={24} total={TOTAL} />,
-  () => <SlideBahTechServicos num={25} total={TOTAL} />,
-  () => <SlideProjetosIntro num={26} total={TOTAL} />,
-  () => <SlideInovaRS num={27} total={TOTAL} />,
-  () => <SlideBahFlashAtendimento num={28} total={TOTAL} />,
-  () => <SlideBahFlashDashboard num={29} total={TOTAL} />,
-  () => <SlideBahVitrine num={30} total={TOTAL} />,
-  () => <SlidePersonalidade num={31} total={TOTAL} />,
+  () => <SlideEstudar num={18} total={TOTAL} />,
+  () => <SlideMindset num={19} total={TOTAL} />,
+  () => <SlideMitos num={20} total={TOTAL} />,
+  () => <SlideRoadmap num={21} total={TOTAL} />,
+  () => <SlideConclusao num={22} total={TOTAL} />,
+  () => <SlideData4Care num={23} total={TOTAL} />,
+  () => <SlideBahTechServicos num={24} total={TOTAL} />,
+  () => <SlideProjetosIntro num={25} total={TOTAL} />,
+  () => <SlideInovaRS num={26} total={TOTAL} />,
+  () => <SlideBahFlashAtendimento num={27} total={TOTAL} />,
+  () => <SlideBahFlashDashboard num={28} total={TOTAL} />,
+  () => <SlideBahVitrine num={29} total={TOTAL} />,
+  () => <SlidePersonalidade num={30} total={TOTAL} />,
 ];
 
 const slideNames = [
@@ -88,7 +86,6 @@ const slideNames = [
   "Dev-Founder",
   "O Desafio Eterno",
   "Divisor — Módulo 03",
-  "Projetos BahTech",
   "Estudar de Forma Inteligente",
   "Mindset de Oportunidade",
   "Mitos Tech",

@@ -7,7 +7,7 @@ const steps = [
   { year: "2021", role: "Bolsista", desc: "Programa de capacitação intensivo — base de dados, lógica, primeiros projetos reais" },
   { year: "2021", role: "Trainee", desc: "Primeiro contato corporativo na Compass.UOL — ritmo de empresa, sprints, code review" },
   { year: "2022", role: "Júnior", desc: "Entregando em produção com responsabilidade — debugging em ambiente real" },
-  { year: "2023", role: "Pleno", desc: "Liderando features complexas, mentorias internas e decisões de arquitetura" },
+  { year: "2023 - 2025", role: "Pleno", desc: "Liderando features complexas, mentorias internas e decisões de arquitetura" },
 ];
 
 const SlideEscada = ({ num, total }: { num: number; total: number }) => {
