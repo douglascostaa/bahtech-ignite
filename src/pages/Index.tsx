@@ -115,41 +115,50 @@ const slideEditableFields: { [idx: number]: { field: string; label: string; valu
     { field: "title", label: "Título", value: "A Morte dos '5 Minutinhos'" },
   ],
   8: [
-    { field: "title", label: "Título", value: "O Júnior 2.0" },
+    { field: "title", label: "Título", value: "O Processo Real de Software" },
   ],
   9: [
-    { field: "title", label: "Título", value: "Obesidade de IA" },
+    { field: "title", label: "Título", value: "A Convergência dos Papéis" },
   ],
   10: [
-    { field: "title", label: "Título", value: "IA como Alavanca" },
+    { field: "title", label: "Título", value: "Construir é a Nova Comunicação" },
   ],
   11: [
-    { field: "title", label: "Título", value: "Dev-Founder" },
+    { field: "title", label: "Título", value: "O Júnior 2.0" },
   ],
   12: [
-    { field: "title", label: "Título", value: "O Desafio Eterno" },
+    { field: "title", label: "Título", value: "Obesidade de IA" },
   ],
   13: [
+    { field: "title", label: "Título", value: "IA como Alavanca" },
+  ],
+  14: [
+    { field: "title", label: "Título", value: "Dev-Founder" },
+  ],
+  15: [
+    { field: "title", label: "Título", value: "O Desafio Eterno" },
+  ],
+  16: [
     { field: "module", label: "Módulo", value: "Módulo 03" },
     { field: "title", label: "Título", value: "Visão de Futuro" },
     { field: "subtitle", label: "Subtítulo", value: "O que vem pela frente" },
   ],
-  14: [
+  17: [
     { field: "title", label: "Título", value: "Projetos BahTech" },
   ],
-  15: [
+  18: [
     { field: "title", label: "Título", value: "Estudar de Forma Inteligente" },
   ],
-  16: [
+  19: [
     { field: "title", label: "Título", value: "Mindset de Oportunidade" },
   ],
-  17: [
+  20: [
     { field: "title", label: "Título", value: "Mitos Tech" },
   ],
-  18: [
+  21: [
     { field: "title", label: "Título", value: "Roadmap Pessoal" },
   ],
-  19: [
+  22: [
     { field: "title", label: "Título", value: "Conclusão & Networking" },
     { field: "phrase", label: "Frase Final", value: "O futuro é de quem constrói" },
   ],
