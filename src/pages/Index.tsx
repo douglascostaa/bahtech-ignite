@@ -25,8 +25,9 @@ import SlideProcessoReal from "@/components/slides/SlideProcessoReal";
 import SlideConvergencia from "@/components/slides/SlideConvergencia";
 import SlideConstruir from "@/components/slides/SlideConstruir";
 import EditMode from "@/components/EditMode";
+import SlideData4Care from "@/components/slides/SlideData4Care";
 
-const TOTAL = 23;
+const TOTAL = 24;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
@@ -52,6 +53,7 @@ const slideComponents = [
   () => <SlideMitos num={21} total={TOTAL} />,
   () => <SlideRoadmap num={22} total={TOTAL} />,
   () => <SlideConclusao num={23} total={TOTAL} />,
+  () => <SlideData4Care num={24} total={TOTAL} />,
 ];
 
 const slideNames = [
@@ -78,6 +80,7 @@ const slideNames = [
   "Mitos Tech",
   "Roadmap Pessoal",
   "Conclusão & Networking",
+  "Data4Care — Bolsa PIBITI",
 ];
 
 const slideEditableFields: { [idx: number]: { field: string; label: string; value: string }[] } = {
@@ -131,6 +134,11 @@ const slideEditableFields: { [idx: number]: { field: string; label: string; valu
   21: [{ field: "title", label: "Título", value: "Seu Roadmap Pessoal" }],
   22: [
     { field: "phrase", label: "Frase Final", value: "O futuro é de quem constrói" },
+  ],
+  23: [
+    { field: "title", label: "Título", value: "Data4Care" },
+    { field: "subtitle", label: "Badge / Bolsa", value: "Bolsa PIBITI · UNISC" },
+    { field: "desc", label: "Descrição", value: "Pesquisa aplicada em dados de saúde com Prof. Leonel Tedesco" },
   ],
 };
 
