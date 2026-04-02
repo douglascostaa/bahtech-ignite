@@ -231,7 +231,32 @@ const Index = () => {
     return () => window.removeEventListener("resize", updateScale);
   }, [updateScale]);
 
-  // O GET inicial via API foi removido — importamos os dados diretamente do JSON para funcionar em produção.
+  // Em dev, garantimos a leitura atualizada via API caso exista. Em prod, silenciosamente falha e usa os iniciais.
+  useEffect(() => {
+    fetch("/api/slide-overrides")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!data || typeof data !== "object") return;
+
+        if (data.textOverrides) {
+          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
+          for (const k of Object.keys(data.textOverrides)) {
+            parsed[Number(k)] = data.textOverrides[k];
+          }
+          setTextOverrides(parsed);
+        } else {
+          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
+          const keys = Object.keys(data).filter((k: string) => k !== "slideOrder" && k !== "default");
+          if (keys.length > 0) {
+            for (const k of keys) setTextOverrides(prev => ({ ...prev, [Number(k)]: data[k] }));
+          }
+        }
+        if (Array.isArray(data.slideOrder) && data.slideOrder.length === TOTAL_SLIDES) {
+          setSlideOrder(data.slideOrder);
+        }
+      })
+      .catch(() => { });
+  }, []);
 
   useEffect(() => {
     const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);

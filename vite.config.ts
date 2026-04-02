@@ -74,6 +74,9 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    watch: {
+      ignored: ['**/src/data/slide-overrides.json']
+    },
     hmr: {
       overlay: false,
     },
