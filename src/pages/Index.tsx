@@ -20,6 +20,9 @@ import SlideMindset from "@/components/slides/SlideMindset";
 import SlideMitos from "@/components/slides/SlideMitos";
 import SlideRoadmap from "@/components/slides/SlideRoadmap";
 import SlideConclusao from "@/components/slides/SlideConclusao";
+import SlideProcessoReal from "@/components/slides/SlideProcessoReal";
+import SlideConvergencia from "@/components/slides/SlideConvergencia";
+import SlideConstruir from "@/components/slides/SlideConstruir";
 import EditMode from "@/components/EditMode";
 
 const TOTAL = 20;
