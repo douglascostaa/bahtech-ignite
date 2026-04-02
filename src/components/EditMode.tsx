@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { X, GripVertical, Pencil, Check } from "lucide-react";
+import { X, GripVertical, Pencil, Check, Save, Loader2 } from "lucide-react";
 
 interface SlideTextOverrides {
   [slideIndex: number]: { [field: string]: string };
@@ -15,6 +15,8 @@ interface EditModeProps {
   onTextChange: (slideIndex: number, field: string, value: string) => void;
   slideNames: string[];
   slideEditableFields: { [slideIndex: number]: { field: string; label: string; value: string }[] };
+  onSave?: () => void;
+  saveStatus?: "idle" | "saving" | "saved" | "error";
 }
 
 const EditMode = ({
@@ -26,6 +28,8 @@ const EditMode = ({
   onTextChange,
   slideNames,
   slideEditableFields,
+  onSave,
+  saveStatus = "idle",
 }: EditModeProps) => {
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -74,10 +78,42 @@ const EditMode = ({
           <h2 className="text-foreground font-display text-xl font-bold">Modo de Edição</h2>
           <span className="text-muted-foreground text-sm ml-2">Arraste para reorganizar • Clique no ícone ✏️ para editar texto</span>
         </div>
-        <button onClick={onClose} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm px-4 py-2 rounded-lg hover:bg-muted">
-          <X className="w-4 h-4" />
-          Fechar (ESC)
-        </button>
+        <div className="flex items-center gap-3">
+          {onSave && (
+            <button
+              onClick={onSave}
+              disabled={saveStatus === "saving"}
+              className={`flex items-center gap-2 text-sm px-4 py-2 rounded-lg font-medium transition-all
+                ${saveStatus === "saved"
+                  ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                  : saveStatus === "error"
+                    ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                    : saveStatus === "saving"
+                      ? "bg-accent/20 text-accent border border-accent/30 cursor-wait"
+                      : "bg-accent text-accent-foreground hover:bg-accent/90"
+                }`}
+            >
+              {saveStatus === "saving" ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : saveStatus === "saved" ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              {saveStatus === "saving"
+                ? "Salvando..."
+                : saveStatus === "saved"
+                  ? "Salvo! ✓"
+                  : saveStatus === "error"
+                    ? "Erro ao salvar"
+                    : "Salvar"}
+            </button>
+          )}
+          <button onClick={onClose} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm px-4 py-2 rounded-lg hover:bg-muted">
+            <X className="w-4 h-4" />
+            Fechar (ESC)
+          </button>
+        </div>
       </div>
 
       <div className="flex">

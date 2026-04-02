@@ -146,6 +146,7 @@ const Index = () => {
   const [scale, setScale] = useState(1);
   const [slideOrder, setSlideOrder] = useState<number[]>(() => Array.from({ length: TOTAL_SLIDES }, (_, i) => i));
   const [textOverrides, setTextOverrides] = useState<{ [slideIndex: number]: { [field: string]: string } }>({});
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
   const updateScale = useCallback(() => {
     if (!containerRef.current) return;
@@ -158,6 +159,23 @@ const Index = () => {
     window.addEventListener("resize", updateScale);
     return () => window.removeEventListener("resize", updateScale);
   }, [updateScale]);
+
+  // Load saved overrides from disk on startup
+  useEffect(() => {
+    fetch("/api/slide-overrides")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && typeof data === "object" && Object.keys(data).length > 0) {
+          // Convert string keys back to numbers
+          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
+          for (const k of Object.keys(data)) {
+            parsed[Number(k)] = data[k];
+          }
+          setTextOverrides(parsed);
+        }
+      })
+      .catch(() => { }); // silently fail if API not available
+  }, []);
 
   useEffect(() => {
     const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -188,6 +206,27 @@ const Index = () => {
       [slideIndex]: { ...prev[slideIndex], [field]: value },
     }));
   }, []);
+
+  const handleSave = useCallback(async () => {
+    setSaveStatus("saving");
+    try {
+      const res = await fetch("/api/slide-overrides", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(textOverrides),
+      });
+      if (res.ok) {
+        setSaveStatus("saved");
+        setTimeout(() => setSaveStatus("idle"), 3000);
+      } else {
+        setSaveStatus("error");
+        setTimeout(() => setSaveStatus("idle"), 3000);
+      }
+    } catch {
+      setSaveStatus("error");
+      setTimeout(() => setSaveStatus("idle"), 3000);
+    }
+  }, [textOverrides]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -225,6 +264,8 @@ const Index = () => {
           onTextChange={handleTextChange}
           slideNames={slideNames}
           slideEditableFields={slideEditableFields}
+          onSave={handleSave}
+          saveStatus={saveStatus}
         />
       </SlideOverridesProvider>
     );
