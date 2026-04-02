@@ -83,12 +83,12 @@ const SlideInovaRS = ({ num, total }: { num: number; total: number }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.6 }}
                         className="relative rounded-3xl overflow-hidden border border-blue-500/25 shadow-xl shadow-blue-500/10"
-                        style={{ height: "185px" }}
+                        style={{ height: "260px" }}
                     >
                         <img
                             src="/images/IMG_1677.jpeg"
                             alt="BahTech com as idealizadoras do Inova RS no South Summit"
-                            className="w-full h-full object-cover object-top"
+                            className="w-full h-full object-cover object-center"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                         <div className="absolute bottom-3 left-4 right-4">
