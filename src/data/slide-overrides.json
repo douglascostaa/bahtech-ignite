@@ -1,45 +1,4 @@
 {
-  "slideOrder": [
-    0,
-    29,
-    1,
-    2,
-    22,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    21
-  ],
-  "textOverrides": {
-    "0": {
-      "subtitle": "BahTech • 2026",
-      "title": "Da Sala de Aula ao CNPJ 🚀",
-      "desc": "Construindo o futuro",
-      "role": "Founder & CEO, BahTech Sistemas LTDA"
-    },
-    "4": {
-      "title": "A decisão de empreender 100%"
-    }
-  }
+  "slideOrder": [],
+  "textOverrides": {}
 }
