@@ -93,7 +93,7 @@ const SlideInovaRS = ({ num, total }: { num: number; total: number }) => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                         <div className="absolute bottom-3 left-4 right-4">
                             <p className="text-white text-[13px] font-medium leading-snug">
-                                🤝 Com as idealizadoras do Inova RS — South Summit 2024
+                                🤝 Com as idealizadoras do Inova RS — South Summit 2026
                             </p>
                         </div>
                     </motion.div>

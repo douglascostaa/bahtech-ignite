@@ -28,7 +28,7 @@ const SlideProjetosIntro = ({ num, total }: { num: number; total: number }) => {
                 >
                     <div className="bg-slide-surface border border-border rounded-3xl p-8 shadow-2xl shadow-slide-accent/10">
                         <img
-                            src="/images/bahtech_logotipo_positivo (1).png"
+                            src="/images/bahtech_logotipo_negativo (2).png"
                             alt="BahTech"
                             className="h-[80px] object-contain"
                         />
