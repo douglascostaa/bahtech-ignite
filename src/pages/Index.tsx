@@ -29,8 +29,12 @@ import SlideData4Care from "@/components/slides/SlideData4Care";
 import SlideBahTechServicos from "@/components/slides/SlideBahTechServicos";
 import SlideProjetosIntro from "@/components/slides/SlideProjetosIntro";
 import SlideInovaRS from "@/components/slides/SlideInovaRS";
+import SlideBahFlashAtendimento from "@/components/slides/SlideBahFlashAtendimento";
+import SlideBahFlashDashboard from "@/components/slides/SlideBahFlashDashboard";
+import SlideBahVitrine from "@/components/slides/SlideBahVitrine";
+import SlidePersonalidade from "@/components/slides/SlidePersonalidade";
 
-const TOTAL = 27;
+const TOTAL = 31;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
@@ -60,6 +64,10 @@ const slideComponents = [
   () => <SlideBahTechServicos num={25} total={TOTAL} />,
   () => <SlideProjetosIntro num={26} total={TOTAL} />,
   () => <SlideInovaRS num={27} total={TOTAL} />,
+  () => <SlideBahFlashAtendimento num={28} total={TOTAL} />,
+  () => <SlideBahFlashDashboard num={29} total={TOTAL} />,
+  () => <SlideBahVitrine num={30} total={TOTAL} />,
+  () => <SlidePersonalidade num={31} total={TOTAL} />,
 ];
 
 const slideNames = [
@@ -90,6 +98,10 @@ const slideNames = [
   "Serviços & Produtos BahTech",
   "Projetos BahTech — Introdução",
   "MIVA — Inova RS",
+  "Bah!Flash — Atendimento IA",
+  "Bah!Flash — Dashboard",
+  "Bah!Vitrine — Produto Digital",
+  "Personalidade — Douglas",
 ];
 
 const slideEditableFields: { [idx: number]: { field: string; label: string; value: string }[] } = {
