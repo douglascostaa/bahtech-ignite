@@ -13,7 +13,7 @@ const items = [
 
 const SlideAlicerce = ({ num, total }: { num: number; total: number }) => {
   const title = useSlideText(2, "title", "O Alicerce Técnico");
-  const desc = useSlideText(2, "desc", "A academia como trampolim — não como destino");
+  const desc = useSlideText(2, "desc", "A academia como trampolim");
 
   return (
     <SlideLayout>

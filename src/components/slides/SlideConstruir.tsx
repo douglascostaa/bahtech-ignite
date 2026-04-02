@@ -19,17 +19,7 @@ const SlideConstruir = ({ num, total }: { num: number; total: number }) => {
           transition={{ delay: 0.4 }} className="max-w-[900px]">
           <div className="bg-slide-surface border border-border rounded-3xl p-12 relative">
             <Quote className="w-10 h-10 text-slide-accent/30 absolute top-8 right-8" />
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <span className="text-white font-bold text-[20px]">MG</span>
-              </div>
-              <div>
-                <div className="text-[22px] font-semibold text-foreground flex items-center gap-2">
-                  Madhu Guru <span className="text-slide-accent text-[16px]">✓</span>
-                </div>
-                <div className="text-[16px] text-slide-gray">@realmadhuguru</div>
-              </div>
-            </div>
+
             <div className="space-y-6">
               <p className="text-[22px] text-foreground leading-relaxed">
                 "No Google, estamos passando de uma cultura de <span className="text-slide-accent font-semibold">"escrever primeiro"</span> para uma de <span className="text-slide-accent font-semibold">"construir primeiro"</span>."

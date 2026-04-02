@@ -27,7 +27,7 @@ const SlidePulo = ({ num, total }: { num: number; total: number }) => {
           </div>
           <h2 className="font-display text-[80px] font-bold leading-[1.05] text-foreground mb-8">{title}</h2>
           <p className="text-[28px] text-slide-gray-light font-light mb-12">
-            O momento de largar o "seguro"<br/>e focar 100% na BahTech
+            O momento de largar o "seguro"<br />e focar 100% na BahTech
           </p>
           <div className="flex gap-6">
             {factors.map((f, i) => (
@@ -47,7 +47,7 @@ const SlidePulo = ({ num, total }: { num: number; total: number }) => {
               "A decisão mais difícil não é empreender — é saber a <span className="text-foreground font-semibold">hora certa</span> de pular."
             </p>
             <p className="text-[18px] text-slide-gray leading-relaxed">
-              Saí da Compass com carteira de clientes, produto validado e um plano de 6 meses. Não foi impulso — foi estratégia.
+              Saí da Compass com carteira de clientes, produto validado e um plano de negócio. Não foi impulso — foi estratégia.
             </p>
           </div>
         </motion.div>

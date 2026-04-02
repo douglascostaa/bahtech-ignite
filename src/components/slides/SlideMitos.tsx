@@ -16,7 +16,7 @@ const SlideMitos = ({ num, total }: { num: number; total: number }) => {
     <SlideLayout>
       <div className="relative z-10 flex flex-col justify-center h-full px-[140px]">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="text-slide-accent text-[18px] font-medium tracking-[0.25em] uppercase mb-6">Bônus</div>
+
           <h2 className="font-display text-[80px] font-bold leading-[1.1] text-foreground mb-16">{title}</h2>
         </motion.div>
         <div className="flex flex-col gap-6">

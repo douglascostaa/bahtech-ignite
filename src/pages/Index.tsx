@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Maximize, Minimize, Grid3X3, Pencil } from "lucide-react";
 import { SlideOverridesProvider } from "@/contexts/SlideOverridesContext";
+import { SlidePositionProvider } from "@/contexts/SlidePositionContext";
 import SlideCover from "@/components/slides/SlideCover";
 import SlideErro2020 from "@/components/slides/SlideErro2020";
 import SlideAlicerce from "@/components/slides/SlideAlicerce";
@@ -191,18 +192,29 @@ const Index = () => {
     return () => window.removeEventListener("resize", updateScale);
   }, [updateScale]);
 
-  // Load saved overrides from disk on startup
+  // Load saved overrides AND slide order from disk on startup
   useEffect(() => {
     fetch("/api/slide-overrides")
       .then((r) => r.json())
       .then((data) => {
-        if (data && typeof data === "object" && Object.keys(data).length > 0) {
-          // Convert string keys back to numbers
+        if (!data || typeof data !== "object") return;
+        // New format: { slideOrder: [...], textOverrides: {...} }
+        if (data.textOverrides) {
           const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
-          for (const k of Object.keys(data)) {
-            parsed[Number(k)] = data[k];
+          for (const k of Object.keys(data.textOverrides)) {
+            parsed[Number(k)] = data.textOverrides[k];
           }
           setTextOverrides(parsed);
+        } else {
+          // Legacy format (only textOverrides at root)
+          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
+          const keys = Object.keys(data).filter(k => k !== "slideOrder");
+          if (keys.length > 0) {
+            for (const k of keys) setTextOverrides(prev => ({ ...prev, [Number(k)]: data[k] }));
+          }
+        }
+        if (Array.isArray(data.slideOrder) && data.slideOrder.length === TOTAL_SLIDES) {
+          setSlideOrder(data.slideOrder);
         }
       })
       .catch(() => { }); // silently fail if API not available
@@ -238,13 +250,17 @@ const Index = () => {
     }));
   }, []);
 
-  const handleSave = useCallback(async () => {
+  const handleSave = useCallback(async (overrides?: typeof textOverrides, order?: number[]) => {
     setSaveStatus("saving");
+    const payload = {
+      slideOrder: order ?? slideOrder,
+      textOverrides: overrides ?? textOverrides,
+    };
     try {
       const res = await fetch("/api/slide-overrides", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(textOverrides),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setSaveStatus("saved");
@@ -257,7 +273,11 @@ const Index = () => {
       setSaveStatus("error");
       setTimeout(() => setSaveStatus("idle"), 3000);
     }
-  }, [textOverrides]);
+  }, [textOverrides, slideOrder]);
+
+  const handleReorder = useCallback((newOrder: number[]) => {
+    setSlideOrder(newOrder);
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -290,7 +310,7 @@ const Index = () => {
           slides={slideComponents}
           slideOrder={slideOrder}
           onClose={() => setShowEdit(false)}
-          onReorder={setSlideOrder}
+          onReorder={handleReorder}
           textOverrides={textOverrides}
           onTextChange={handleTextChange}
           slideNames={slideNames}
@@ -365,7 +385,9 @@ const Index = () => {
                   transformOrigin: 'center center',
                 }}
               >
-                {CurrentSlide()}
+                <SlidePositionProvider value={{ position: current + 1, total: TOTAL_SLIDES }}>
+                  {CurrentSlide()}
+                </SlidePositionProvider>
               </div>
             </motion.div>
           </AnimatePresence>
