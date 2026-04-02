@@ -2,5 +2,9 @@
   "slideOrder": [
     0
   ],
-  "textOverrides": {}
+  "textOverrides": {
+    "0": {
+      "desc": "Açãoçãoçãõção"
+    }
+  }
 }

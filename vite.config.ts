@@ -36,8 +36,9 @@ const slideOverridesPlugin = {
         const chunks: Buffer[] = [];
         req.on("data", (chunk: Buffer) => chunks.push(chunk));
         req.on("end", () => {
+          let body = "";
           try {
-            const body = Buffer.concat(chunks).toString("utf-8");
+            body = Buffer.concat(chunks).toString("utf-8");
             JSON.parse(body); // validate JSON
             fs.writeFileSync(OVERRIDES_FILE, JSON.stringify(JSON.parse(body), null, 2), "utf-8");
             res.setHeader("Content-Type", "application/json");
@@ -54,6 +55,7 @@ const slideOverridesPlugin = {
               }
             );
           } catch (e) {
+            console.error("POST /api/slide-overrides ERROR:", e, body);
             res.statusCode = 400;
             res.end(JSON.stringify({ error: "Invalid JSON" }));
           }
