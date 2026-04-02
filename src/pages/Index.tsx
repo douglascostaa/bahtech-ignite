@@ -25,7 +25,7 @@ import SlideConvergencia from "@/components/slides/SlideConvergencia";
 import SlideConstruir from "@/components/slides/SlideConstruir";
 import EditMode from "@/components/EditMode";
 
-const TOTAL = 20;
+const TOTAL = 23;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
@@ -36,18 +36,21 @@ const slideComponents = [
   () => <SlideBahTechHoje num={6} total={TOTAL} />,
   () => <SlideModuloDivider num={7} total={TOTAL} module="Módulo 02" title="O Novo Mercado" subtitle="Tech & IA estão mudando tudo" />,
   () => <SlideMorte5Min num={8} total={TOTAL} />,
-  () => <SlideJunior2 num={9} total={TOTAL} />,
-  () => <SlideObesidade num={10} total={TOTAL} />,
-  () => <SlideAlavanca num={11} total={TOTAL} />,
-  () => <SlideDevFounder num={12} total={TOTAL} />,
-  () => <SlideDesafioEterno num={13} total={TOTAL} />,
-  () => <SlideModuloDivider num={14} total={TOTAL} module="Módulo 03" title="Visão de Futuro" subtitle="O que vem pela frente" />,
-  () => <SlideProjetos num={15} total={TOTAL} />,
-  () => <SlideEstudar num={16} total={TOTAL} />,
-  () => <SlideMindset num={17} total={TOTAL} />,
-  () => <SlideMitos num={18} total={TOTAL} />,
-  () => <SlideRoadmap num={19} total={TOTAL} />,
-  () => <SlideConclusao num={20} total={TOTAL} />,
+  () => <SlideProcessoReal num={9} total={TOTAL} />,
+  () => <SlideConvergencia num={10} total={TOTAL} />,
+  () => <SlideConstruir num={11} total={TOTAL} />,
+  () => <SlideJunior2 num={12} total={TOTAL} />,
+  () => <SlideObesidade num={13} total={TOTAL} />,
+  () => <SlideAlavanca num={14} total={TOTAL} />,
+  () => <SlideDevFounder num={15} total={TOTAL} />,
+  () => <SlideDesafioEterno num={16} total={TOTAL} />,
+  () => <SlideModuloDivider num={17} total={TOTAL} module="Módulo 03" title="Visão de Futuro" subtitle="O que vem pela frente" />,
+  () => <SlideProjetos num={18} total={TOTAL} />,
+  () => <SlideEstudar num={19} total={TOTAL} />,
+  () => <SlideMindset num={20} total={TOTAL} />,
+  () => <SlideMitos num={21} total={TOTAL} />,
+  () => <SlideRoadmap num={22} total={TOTAL} />,
+  () => <SlideConclusao num={23} total={TOTAL} />,
 ];
 
 const slideNames = [
