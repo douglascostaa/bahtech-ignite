@@ -33,10 +33,11 @@ const slideOverridesPlugin = {
       }
 
       if (req.method === "POST") {
-        let body = "";
-        req.on("data", (chunk: any) => (body += chunk));
+        const chunks: Buffer[] = [];
+        req.on("data", (chunk: Buffer) => chunks.push(chunk));
         req.on("end", () => {
           try {
+            const body = Buffer.concat(chunks).toString("utf-8");
             JSON.parse(body); // validate JSON
             fs.writeFileSync(OVERRIDES_FILE, JSON.stringify(JSON.parse(body), null, 2), "utf-8");
             res.setHeader("Content-Type", "application/json");
