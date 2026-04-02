@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import SlideLayout from "../SlideLayout";
 import SlideNumber from "../SlideNumber";
+import { useSlideText } from "@/contexts/SlideOverridesContext";
 
 const SlidePersonalidade = ({ num, total }: { num: number; total: number }) => {
+    const eyebrow = useSlideText(30, "eyebrow", "Módulo 01 · Antes de começar");
+    const title = useSlideText(30, "title", "Quem sou eu e por que<br />estou sempre buscando mais");
+    const desc = useSlideText(30, "desc", "Tenho um medo genuíno de ficar pra trás — e isso me faz buscar, estudar e construir sem parar.");
+
     return (
         <SlideLayout>
             {/* Subtle glow */}
@@ -17,7 +22,7 @@ const SlidePersonalidade = ({ num, total }: { num: number; total: number }) => {
                     transition={{ duration: 0.5 }}
                     className="text-slide-accent text-[17px] font-medium tracking-[0.25em] uppercase mb-8"
                 >
-                    Módulo 01 · Antes de começar
+                    {eyebrow}
                 </motion.p>
 
                 {/* Main title */}
@@ -26,12 +31,8 @@ const SlidePersonalidade = ({ num, total }: { num: number; total: number }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.7 }}
                     className="font-display text-[86px] font-bold leading-[1.08] text-foreground mb-10"
-                >
-                    Quem sou eu e por que<br />
-                    <span className="bg-gradient-to-r from-slide-accent to-cyan-400 bg-clip-text text-transparent">
-                        estou sempre buscando mais
-                    </span>
-                </motion.h2>
+                    dangerouslySetInnerHTML={{ __html: title.replace('estou sempre buscando mais', '<span class="bg-gradient-to-r from-slide-accent to-cyan-400 bg-clip-text text-transparent">estou sempre buscando mais</span>') }}
+                />
 
                 {/* Minimal description */}
                 <motion.p
@@ -40,7 +41,7 @@ const SlidePersonalidade = ({ num, total }: { num: number; total: number }) => {
                     transition={{ delay: 0.35, duration: 0.6 }}
                     className="text-[26px] text-slide-gray-light leading-relaxed max-w-[760px]"
                 >
-                    Tenho um medo genuíno de ficar pra trás — e isso me faz buscar, estudar e construir sem parar.
+                    {desc}
                 </motion.p>
 
             </div>

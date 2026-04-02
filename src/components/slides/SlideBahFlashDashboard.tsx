@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import SlideLayout from "../SlideLayout";
 import SlideNumber from "../SlideNumber";
 import { BarChart3, Activity, Bot } from "lucide-react";
+import { useSlideText } from "@/contexts/SlideOverridesContext";
 
 const stats = [
     { value: "100%", label: "Monitorados", color: "text-yellow-400" },
@@ -10,6 +11,9 @@ const stats = [
 ];
 
 const SlideBahFlashDashboard = ({ num, total }: { num: number; total: number }) => {
+    const title = useSlideText(28, "title", "IA integrada a um dashboard<br />em tempo real");
+    const desc = useSlideText(28, "desc", "Cada lead, mensagem e atendimento visível — para decisões mais rápidas.");
+
     return (
         <SlideLayout>
             <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full bg-amber-500/8 blur-[200px] pointer-events-none" />
@@ -28,11 +32,12 @@ const SlideBahFlashDashboard = ({ num, total }: { num: number; total: number }) 
                             <Activity className="w-4 h-4 text-yellow-400" />
                             <span className="text-yellow-300 text-[14px] font-medium">Bah!Flash · Monitoramento</span>
                         </div>
-                        <h2 className="font-display text-[52px] font-bold leading-[1.05] bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent">
-                            IA integrada a um dashboard<br />em tempo real
-                        </h2>
+                        <h2
+                            className="font-display text-[52px] font-bold leading-[1.05] bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent"
+                            dangerouslySetInnerHTML={{ __html: title }}
+                        />
                         <p className="text-[17px] text-slide-gray-light mt-2">
-                            Cada lead, mensagem e atendimento visível — para decisões mais rápidas.
+                            {desc}
                         </p>
                     </div>
                     <div className="flex gap-3 shrink-0 ml-8 mt-1">

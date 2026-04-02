@@ -3,6 +3,8 @@ import SlideLayout from "../SlideLayout";
 import SlideNumber from "../SlideNumber";
 import { Store, ShoppingBag, Eye, Clock } from "lucide-react";
 
+import { useSlideText } from "@/contexts/SlideOverridesContext";
+
 const features = [
     { icon: Eye, text: "Visibilidade 24/7", desc: "Vitrine sempre aberta — mesmo quando a loja física está fechada" },
     { icon: ShoppingBag, text: "Catálogo digital", desc: "Produtos organizados, acessíveis por qualquer dispositivo" },
@@ -10,6 +12,10 @@ const features = [
 ];
 
 const SlideBahVitrine = ({ num, total }: { num: number; total: number }) => {
+    const title = useSlideText(29, "title", "Bah!Vitrine");
+    const desc1 = useSlideText(29, "desc1", "Nasceu de uma dor real: muitos clientes queriam o BahCommerce, mas o caixa não alcançava.");
+    const desc2 = useSlideText(29, "desc2", "A Bah!Vitrine é a porta de entrada — loja digital simples, acessível e que já gera resultado.");
+
     return (
         <SlideLayout>
             <div className="absolute top-[-60px] right-[-60px] w-[600px] h-[600px] rounded-full bg-pink-500/8 blur-[180px] pointer-events-none" />
@@ -28,13 +34,13 @@ const SlideBahVitrine = ({ num, total }: { num: number; total: number }) => {
                             <span className="text-pink-300 text-[14px] font-medium">Produto Digital · BahTech</span>
                         </div>
                         <h2 className="font-display text-[58px] font-bold leading-[1.05] bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent mb-4">
-                            Bah!Vitrine
+                            {title}
                         </h2>
                         <p className="text-[17px] text-slide-gray-light leading-relaxed mb-2">
-                            Nasceu de uma dor real: muitos clientes queriam o BahCommerce, mas o caixa não alcançava.
+                            {desc1}
                         </p>
                         <p className="text-[17px] text-slide-gray-light leading-relaxed">
-                            A Bah!Vitrine é a porta de entrada — loja digital simples, acessível e que já gera resultado.
+                            {desc2}
                         </p>
                     </motion.div>
 
@@ -62,7 +68,7 @@ const SlideBahVitrine = ({ num, total }: { num: number; total: number }) => {
                 {/* RIGHT: 3 screenshots — object-contain para mostrar tudo */}
                 <div className="flex gap-4 flex-1 h-full py-2">
                     {[
-                        "2026-04-02_15-01-34.png",
+                        "image copy.png",
                         "2026-04-02_15-03-08.png",
                         "image.png",
                     ].map((img, i) => (

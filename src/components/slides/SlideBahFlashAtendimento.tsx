@@ -3,6 +3,8 @@ import SlideLayout from "../SlideLayout";
 import SlideNumber from "../SlideNumber";
 import { Bot, Clock, MessageSquare, RefreshCw } from "lucide-react";
 
+import { useSlideText } from "@/contexts/SlideOverridesContext";
+
 const features = [
     { icon: MessageSquare, text: "Mensagens humanizadas", desc: "Respostas naturais — tom de voz adaptado ao lead" },
     { icon: Clock, text: "Delay calculado", desc: "Tempo de resposta simulado para não parecer automático" },
@@ -10,6 +12,9 @@ const features = [
 ];
 
 const SlideBahFlashAtendimento = ({ num, total }: { num: number; total: number }) => {
+    const title = useSlideText(27, "title", "IA que atende<br />como gente");
+    const desc = useSlideText(27, "desc", "Nossa IA qualifica leads no WhatsApp com naturalidade — enquanto o time foca no que importa.");
+
     return (
         <SlideLayout>
             <div className="absolute top-[-80px] left-[-80px] w-[600px] h-[600px] rounded-full bg-yellow-500/8 blur-[180px] pointer-events-none" />
@@ -27,11 +32,12 @@ const SlideBahFlashAtendimento = ({ num, total }: { num: number; total: number }
                             <Bot className="w-4 h-4 text-yellow-400" />
                             <span className="text-yellow-300 text-[14px] font-medium tracking-wide">Bah!Flash · IA em vendas</span>
                         </div>
-                        <h2 className="font-display text-[56px] font-bold leading-[1.05] bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent mb-4">
-                            IA que atende<br />como gente
-                        </h2>
+                        <h2
+                            className="font-display text-[56px] font-bold leading-[1.05] bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent mb-4"
+                            dangerouslySetInnerHTML={{ __html: title }}
+                        />
                         <p className="text-[18px] text-slide-gray-light leading-relaxed">
-                            Nossa IA qualifica leads no WhatsApp com naturalidade — enquanto o time foca no que importa.
+                            {desc}
                         </p>
                     </motion.div>
 
@@ -58,7 +64,7 @@ const SlideBahFlashAtendimento = ({ num, total }: { num: number; total: number }
 
                 {/* RIGHT: screenshots — object-contain to show full image */}
                 <div className="flex gap-5 flex-1 h-full py-2">
-                    {["atendimento-1.png", "atendimento-2.png"].map((img, i) => (
+                    {["atendimento-2.png", "atendimento-1.png"].map((img, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 40 }}

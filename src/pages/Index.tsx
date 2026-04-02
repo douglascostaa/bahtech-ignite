@@ -164,6 +164,24 @@ const slideEditableFields: { [idx: number]: { field: string; label: string; valu
     { field: "subtitle", label: "Subtítulo", value: "Memorial das Inundações · Região dos Vales" },
     { field: "desc", label: "Descrição", value: "Plataforma digital criada para o Inova RS — memorial interativo das inundações que devastaram a região. Um projeto que tocou de perto nossa empresa e nosso time." },
   ],
+  27: [
+    { field: "title", label: "Título", value: "IA que atende como gente" },
+    { field: "desc", label: "Descrição", value: "Nossa IA qualifica leads no WhatsApp com naturalidade — enquanto o time foca no que importa." }
+  ],
+  28: [
+    { field: "title", label: "Título", value: "IA integrada a um dashboard em tempo real" },
+    { field: "desc", label: "Descrição", value: "Cada lead, mensagem e atendimento visível — para decisões mais rápidas." }
+  ],
+  29: [
+    { field: "title", label: "Título", value: "Bah!Vitrine" },
+    { field: "desc1", label: "Descrição 1", value: "Nasceu de uma dor real: muitos clientes queriam o BahCommerce, mas o caixa não alcançava." },
+    { field: "desc2", label: "Descrição 2", value: "A Bah!Vitrine é a porta de entrada — loja digital simples, acessível e que já gera resultado." }
+  ],
+  30: [
+    { field: "eyebrow", label: "Etiqueta superior", value: "Módulo 01 · Antes de começar" },
+    { field: "title", label: "Título", value: "Quem sou eu e por que estou sempre buscando mais" },
+    { field: "desc", label: "Descrição", value: "Tenho um medo genuíno de ficar pra trás — e isso me faz buscar, estudar e construir sem parar." }
+  ]
 };
 
 const TOTAL_SLIDES = slideComponents.length;
