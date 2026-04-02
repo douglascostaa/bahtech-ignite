@@ -4,9 +4,9 @@ import SlideNumber from "../SlideNumber";
 import { useSlideText } from "@/contexts/SlideOverridesContext";
 
 const SlidePersonalidade = ({ num, total }: { num: number; total: number }) => {
-    const eyebrow = useSlideText(30, "eyebrow", "Módulo 01 · Antes de começar");
-    const title = useSlideText(30, "title", "Quem sou eu e por que<br />estou sempre buscando mais");
-    const desc = useSlideText(30, "desc", "Tenho um medo genuíno de ficar pra trás — e isso me faz buscar, estudar e construir sem parar.");
+    const eyebrow = useSlideText(29, "eyebrow", "Módulo 01 · Antes de começar");
+    const title = useSlideText(29, "title", "Quem sou eu e por que<br />estou sempre buscando mais");
+    const desc = useSlideText(29, "desc", "Tenho um medo genuíno de ficar pra trás — e isso me faz buscar, estudar e construir sem parar.");
 
     return (
         <SlideLayout>

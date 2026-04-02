@@ -33,6 +33,7 @@ import SlideBahFlashAtendimento from "@/components/slides/SlideBahFlashAtendimen
 import SlideBahFlashDashboard from "@/components/slides/SlideBahFlashDashboard";
 import SlideBahVitrine from "@/components/slides/SlideBahVitrine";
 import SlidePersonalidade from "@/components/slides/SlidePersonalidade";
+import initialOverridesData from "@/data/slide-overrides.json";
 
 const TOTAL = 30;
 
@@ -146,38 +147,37 @@ const slideEditableFields: { [idx: number]: { field: string; label: string; valu
     { field: "title", label: "Título", value: "Visão de Futuro" },
     { field: "subtitle", label: "Subtítulo", value: "O que vem pela frente" },
   ],
-  17: [{ field: "title", label: "Título", value: "Projetos BahTech" }],
-  18: [{ field: "title", label: "Título", value: "Estudar de Forma Inteligente" }],
-  19: [{ field: "title", label: "Título", value: "O Mindset de Oportunidade" }],
-  20: [{ field: "title", label: "Título", value: "Mitos Destruídos" }],
-  21: [{ field: "title", label: "Título", value: "Seu Roadmap Pessoal" }],
-  22: [
+  17: [{ field: "title", label: "Título", value: "Estudar de Forma Inteligente" }],
+  18: [{ field: "title", label: "Título", value: "O Mindset de Oportunidade" }],
+  19: [{ field: "title", label: "Título", value: "Mitos Destruídos" }],
+  20: [{ field: "title", label: "Título", value: "Seu Roadmap Pessoal" }],
+  21: [
     { field: "phrase", label: "Frase Final", value: "O futuro é de quem constrói" },
   ],
-  23: [
+  22: [
     { field: "title", label: "Título", value: "Data4Care" },
     { field: "subtitle", label: "Badge / Bolsa", value: "Bolsa PIBITI · UNISC" },
     { field: "desc", label: "Descrição", value: "Pesquisa aplicada em dados de saúde com Prof. Leonel Tedesco" },
   ],
-  26: [
+  25: [
     { field: "title", label: "Título", value: "MIVA" },
     { field: "subtitle", label: "Subtítulo", value: "Memorial das Inundações · Região dos Vales" },
     { field: "desc", label: "Descrição", value: "Plataforma digital criada para o Inova RS — memorial interativo das inundações que devastaram a região. Um projeto que tocou de perto nossa empresa e nosso time." },
   ],
-  27: [
+  26: [
     { field: "title", label: "Título", value: "IA que atende como gente" },
     { field: "desc", label: "Descrição", value: "Nossa IA qualifica leads no WhatsApp com naturalidade — enquanto o time foca no que importa." }
   ],
-  28: [
+  27: [
     { field: "title", label: "Título", value: "IA integrada a um dashboard em tempo real" },
     { field: "desc", label: "Descrição", value: "Cada lead, mensagem e atendimento visível — para decisões mais rápidas." }
   ],
-  29: [
+  28: [
     { field: "title", label: "Título", value: "Bah!Vitrine" },
     { field: "desc1", label: "Descrição 1", value: "Nasceu de uma dor real: muitos clientes queriam o BahCommerce, mas o caixa não alcançava." },
     { field: "desc2", label: "Descrição 2", value: "A Bah!Vitrine é a porta de entrada — loja digital simples, acessível e que já gera resultado." }
   ],
-  30: [
+  29: [
     { field: "eyebrow", label: "Etiqueta superior", value: "Módulo 01 · Antes de começar" },
     { field: "title", label: "Título", value: "Quem sou eu e por que estou sempre buscando mais" },
     { field: "desc", label: "Descrição", value: "Tenho um medo genuíno de ficar pra trás — e isso me faz buscar, estudar e construir sem parar." }
@@ -194,8 +194,29 @@ const Index = () => {
   const [direction, setDirection] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-  const [slideOrder, setSlideOrder] = useState<number[]>(() => Array.from({ length: TOTAL_SLIDES }, (_, i) => i));
-  const [textOverrides, setTextOverrides] = useState<{ [slideIndex: number]: { [field: string]: string } }>({});
+  const [slideOrder, setSlideOrder] = useState<number[]>(() => {
+    const data: any = initialOverridesData;
+    if (data && Array.isArray(data.slideOrder) && data.slideOrder.length === TOTAL_SLIDES) {
+      return data.slideOrder;
+    }
+    return Array.from({ length: TOTAL_SLIDES }, (_, i) => i);
+  });
+
+  const [textOverrides, setTextOverrides] = useState<{ [slideIndex: number]: { [field: string]: string } }>(() => {
+    const data: any = initialOverridesData;
+    const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
+    if (data && data.textOverrides) {
+      for (const k of Object.keys(data.textOverrides)) {
+        parsed[Number(k)] = data.textOverrides[k];
+      }
+    } else if (data) {
+      const keys = Object.keys(data).filter(k => k !== "slideOrder" && k !== "default");
+      if (keys.length > 0) {
+        for (const k of keys) parsed[Number(k)] = data[k];
+      }
+    }
+    return parsed;
+  });
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
   const updateScale = useCallback(() => {
@@ -210,33 +231,7 @@ const Index = () => {
     return () => window.removeEventListener("resize", updateScale);
   }, [updateScale]);
 
-  // Load saved overrides AND slide order from disk on startup
-  useEffect(() => {
-    fetch("/api/slide-overrides")
-      .then((r) => r.json())
-      .then((data) => {
-        if (!data || typeof data !== "object") return;
-        // New format: { slideOrder: [...], textOverrides: {...} }
-        if (data.textOverrides) {
-          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
-          for (const k of Object.keys(data.textOverrides)) {
-            parsed[Number(k)] = data.textOverrides[k];
-          }
-          setTextOverrides(parsed);
-        } else {
-          // Legacy format (only textOverrides at root)
-          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
-          const keys = Object.keys(data).filter(k => k !== "slideOrder");
-          if (keys.length > 0) {
-            for (const k of keys) setTextOverrides(prev => ({ ...prev, [Number(k)]: data[k] }));
-          }
-        }
-        if (Array.isArray(data.slideOrder) && data.slideOrder.length === TOTAL_SLIDES) {
-          setSlideOrder(data.slideOrder);
-        }
-      })
-      .catch(() => { }); // silently fail if API not available
-  }, []);
+  // O GET inicial via API foi removido — importamos os dados diretamente do JSON para funcionar em produção.
 
   useEffect(() => {
     const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -295,7 +290,8 @@ const Index = () => {
 
   const handleReorder = useCallback((newOrder: number[]) => {
     setSlideOrder(newOrder);
-  }, []);
+    handleSave(textOverrides, newOrder);
+  }, [handleSave, textOverrides]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

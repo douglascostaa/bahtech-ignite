@@ -12,8 +12,8 @@ const features = [
 ];
 
 const SlideBahFlashAtendimento = ({ num, total }: { num: number; total: number }) => {
-    const title = useSlideText(27, "title", "IA que atende<br />como gente");
-    const desc = useSlideText(27, "desc", "Nossa IA qualifica leads no WhatsApp com naturalidade — enquanto o time foca no que importa.");
+    const title = useSlideText(26, "title", "IA que atende<br />como gente");
+    const desc = useSlideText(26, "desc", "Nossa IA qualifica leads no WhatsApp com naturalidade — enquanto o time foca no que importa.");
 
     return (
         <SlideLayout>

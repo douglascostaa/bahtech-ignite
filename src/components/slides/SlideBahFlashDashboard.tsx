@@ -11,8 +11,8 @@ const stats = [
 ];
 
 const SlideBahFlashDashboard = ({ num, total }: { num: number; total: number }) => {
-    const title = useSlideText(28, "title", "IA integrada a um dashboard<br />em tempo real");
-    const desc = useSlideText(28, "desc", "Cada lead, mensagem e atendimento visível — para decisões mais rápidas.");
+    const title = useSlideText(27, "title", "IA integrada a um dashboard<br />em tempo real");
+    const desc = useSlideText(27, "desc", "Cada lead, mensagem e atendimento visível — para decisões mais rápidas.");
 
     return (
         <SlideLayout>

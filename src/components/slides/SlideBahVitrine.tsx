@@ -12,9 +12,9 @@ const features = [
 ];
 
 const SlideBahVitrine = ({ num, total }: { num: number; total: number }) => {
-    const title = useSlideText(29, "title", "Bah!Vitrine");
-    const desc1 = useSlideText(29, "desc1", "Nasceu de uma dor real: muitos clientes queriam o BahCommerce, mas o caixa não alcançava.");
-    const desc2 = useSlideText(29, "desc2", "A Bah!Vitrine é a porta de entrada — loja digital simples, acessível e que já gera resultado.");
+    const title = useSlideText(28, "title", "Bah!Vitrine");
+    const desc1 = useSlideText(28, "desc1", "Nasceu de uma dor real: muitos clientes queriam o BahCommerce, mas o caixa não alcançava.");
+    const desc2 = useSlideText(28, "desc2", "A Bah!Vitrine é a porta de entrada — loja digital simples, acessível e que já gera resultado.");
 
     return (
         <SlideLayout>
