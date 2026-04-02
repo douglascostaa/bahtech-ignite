@@ -26,8 +26,11 @@ import SlideConvergencia from "@/components/slides/SlideConvergencia";
 import SlideConstruir from "@/components/slides/SlideConstruir";
 import EditMode from "@/components/EditMode";
 import SlideData4Care from "@/components/slides/SlideData4Care";
+import SlideBahTechServicos from "@/components/slides/SlideBahTechServicos";
+import SlideProjetosIntro from "@/components/slides/SlideProjetosIntro";
+import SlideInovaRS from "@/components/slides/SlideInovaRS";
 
-const TOTAL = 24;
+const TOTAL = 27;
 
 const slideComponents = [
   () => <SlideCover total={TOTAL} />,
@@ -54,6 +57,9 @@ const slideComponents = [
   () => <SlideRoadmap num={22} total={TOTAL} />,
   () => <SlideConclusao num={23} total={TOTAL} />,
   () => <SlideData4Care num={24} total={TOTAL} />,
+  () => <SlideBahTechServicos num={25} total={TOTAL} />,
+  () => <SlideProjetosIntro num={26} total={TOTAL} />,
+  () => <SlideInovaRS num={27} total={TOTAL} />,
 ];
 
 const slideNames = [
@@ -81,6 +87,9 @@ const slideNames = [
   "Roadmap Pessoal",
   "Conclusão & Networking",
   "Data4Care — Bolsa PIBITI",
+  "Serviços & Produtos BahTech",
+  "Projetos BahTech — Introdução",
+  "MIVA — Inova RS",
 ];
 
 const slideEditableFields: { [idx: number]: { field: string; label: string; value: string }[] } = {
@@ -139,6 +148,11 @@ const slideEditableFields: { [idx: number]: { field: string; label: string; valu
     { field: "title", label: "Título", value: "Data4Care" },
     { field: "subtitle", label: "Badge / Bolsa", value: "Bolsa PIBITI · UNISC" },
     { field: "desc", label: "Descrição", value: "Pesquisa aplicada em dados de saúde com Prof. Leonel Tedesco" },
+  ],
+  26: [
+    { field: "title", label: "Título", value: "MIVA" },
+    { field: "subtitle", label: "Subtítulo", value: "Memorial das Inundações · Região dos Vales" },
+    { field: "desc", label: "Descrição", value: "Plataforma digital criada para o Inova RS — memorial interativo das inundações que devastaram a região. Um projeto que tocou de perto nossa empresa e nosso time." },
   ],
 };
 
