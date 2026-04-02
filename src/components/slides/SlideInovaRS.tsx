@@ -35,7 +35,7 @@ const SlideInovaRS = ({ num, total }: { num: number; total: number }) => {
                         <div className="flex flex-col gap-2">
                             <div className="flex items-center gap-2 bg-blue-500/15 border border-blue-500/30 rounded-full px-4 py-2 w-fit">
                                 <Award className="w-4 h-4 text-blue-400" />
-                                <span className="text-blue-300 text-[14px] font-medium">Inova RS · South Summit 2024</span>
+                                <span className="text-blue-300 text-[14px] font-medium">Inova RS · South Summit 2026</span>
                             </div>
                             <div className="flex items-center gap-2 bg-emerald-500/15 border border-emerald-500/30 rounded-full px-4 py-2 w-fit">
                                 <MapPin className="w-4 h-4 text-emerald-400" />
