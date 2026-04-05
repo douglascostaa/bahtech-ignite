@@ -33,8 +33,8 @@
   ],
   "textOverrides": {
     "0": {
+      "title": "Da Sala de Aula ao CNPJ 🚀",
       "desc": "",
-      "title": "Da Sala de Aula ao CNBahTech Ignite 2026PJ 🚀",
       "role": "CEO & Founder, BahTech | Engenheiro de Computação"
     },
     "1": {
@@ -44,7 +44,7 @@
       "title": "Momento de empreender 100%"
     },
     "29": {
-      "desc": "Tenho um medo  de ficar pra trás e isso me faz buscar, estudar e construir sem parar."
+      "desc": "Tenho um medo de ficar pra trás e isso me faz buscar, estudar e construir sem parar."
     }
   }
 }
