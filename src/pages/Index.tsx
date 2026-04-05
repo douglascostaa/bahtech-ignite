@@ -204,6 +204,8 @@ const Index = () => {
     handleTextChange,
     handleSave,
     handleReorder,
+    versions,
+    restoreVersion,
   } = useSlideStorage(TOTAL_SLIDES, initialOverridesData);
 
   const updateScale = useCallback(() => {
@@ -279,6 +281,8 @@ const Index = () => {
           slideEditableFields={slideEditableFields}
           onSave={handleSave}
           saveStatus={saveStatus}
+          versions={versions}
+          onRestoreVersion={restoreVersion}
         />
       </SlideOverridesProvider>
     );
