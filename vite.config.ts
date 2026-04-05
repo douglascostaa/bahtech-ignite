@@ -5,12 +5,22 @@ import { componentTagger } from "lovable-tagger";
 import fs from "fs";
 import { exec } from "child_process";
 
-const OVERRIDES_FILE = path.resolve(__dirname, "src/data/slide-overrides.json");
+// ⚠️ Arquivo FORA de src/ para não disparar HMR do Vite
+const OVERRIDES_FILE = path.resolve(__dirname, "data/slide-overrides.json");
 
 const slideOverridesPlugin = {
   name: "slide-overrides-api",
   configureServer(server: any) {
-    server.middlewares.use("/api/slide-overrides", (req: any, res: any) => {
+    // Parse JSON body helper
+    const parseBody = (req: any): Promise<string> =>
+      new Promise((resolve, reject) => {
+        const chunks: Buffer[] = [];
+        req.on("data", (chunk: Buffer) => chunks.push(chunk));
+        req.on("end", () => resolve(Buffer.concat(chunks).toString("utf-8")));
+        req.on("error", reject);
+      });
+
+    server.middlewares.use("/api/slide-overrides", async (req: any, res: any) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
       res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -28,38 +38,40 @@ const slideOverridesPlugin = {
           res.setHeader("Content-Type", "application/json");
           return res.end(data);
         } catch {
+          res.setHeader("Content-Type", "application/json");
           return res.end("{}");
         }
       }
 
       if (req.method === "POST") {
-        const chunks: Buffer[] = [];
-        req.on("data", (chunk: Buffer) => chunks.push(chunk));
-        req.on("end", () => {
-          let body = "";
-          try {
-            body = Buffer.concat(chunks).toString("utf-8");
-            JSON.parse(body); // validate JSON
-            fs.writeFileSync(OVERRIDES_FILE, JSON.stringify(JSON.parse(body), null, 2), "utf-8");
-            res.setHeader("Content-Type", "application/json");
-            res.end(JSON.stringify({ ok: true }));
+        try {
+          const body = await parseBody(req);
+          const parsed = JSON.parse(body);
+          const pretty = JSON.stringify(parsed, null, 2);
 
-            // Auto commit + push
-            const cwd = __dirname;
-            exec(
-              `git add -A && git commit -m "chore: salvar edições dos slides" && git push origin main`,
-              { cwd },
-              (err, stdout, stderr) => {
-                if (err) console.error("[slide-overrides] git error:", stderr);
-                else console.log("[slide-overrides] git push:", stdout.trim());
-              }
-            );
-          } catch (e) {
-            console.error("POST /api/slide-overrides ERROR:", e, body);
-            res.statusCode = 400;
-            res.end(JSON.stringify({ error: "Invalid JSON" }));
-          }
-        });
+          // Ensure data/ directory exists
+          const dir = path.dirname(OVERRIDES_FILE);
+          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+
+          fs.writeFileSync(OVERRIDES_FILE, pretty, "utf-8");
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ ok: true }));
+
+          // Background: git commit + push
+          exec(
+            `git add -A && git commit -m "chore: salvar edições dos slides" && git push origin main`,
+            { cwd: __dirname },
+            (err, stdout, stderr) => {
+              if (err) console.error("[slide-overrides] git error:", stderr);
+              else console.log("[slide-overrides] git push:", stdout.trim());
+            }
+          );
+        } catch (e) {
+          console.error("[slide-overrides] POST error:", e);
+          res.statusCode = 400;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ error: "Invalid JSON" }));
+        }
         return;
       }
 
@@ -74,9 +86,6 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    watch: {
-      ignored: ['**/src/data/slide-overrides.json']
-    },
     hmr: {
       overlay: false,
     },

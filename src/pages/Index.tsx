@@ -34,6 +34,7 @@ import SlideBahFlashDashboard from "@/components/slides/SlideBahFlashDashboard";
 import SlideBahVitrine from "@/components/slides/SlideBahVitrine";
 import SlidePersonalidade from "@/components/slides/SlidePersonalidade";
 import initialOverridesData from "@/data/slide-overrides.json";
+import { useSlideStorage } from "@/hooks/useSlideStorage";
 
 const TOTAL = 30;
 
@@ -194,30 +195,16 @@ const Index = () => {
   const [direction, setDirection] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-  const [slideOrder, setSlideOrder] = useState<number[]>(() => {
-    const data: any = initialOverridesData;
-    if (data && Array.isArray(data.slideOrder) && data.slideOrder.length === TOTAL_SLIDES) {
-      return data.slideOrder;
-    }
-    return Array.from({ length: TOTAL_SLIDES }, (_, i) => i);
-  });
 
-  const [textOverrides, setTextOverrides] = useState<{ [slideIndex: number]: { [field: string]: string } }>(() => {
-    const data: any = initialOverridesData;
-    const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
-    if (data && data.textOverrides) {
-      for (const k of Object.keys(data.textOverrides)) {
-        parsed[Number(k)] = data.textOverrides[k];
-      }
-    } else if (data) {
-      const keys = Object.keys(data).filter(k => k !== "slideOrder" && k !== "default");
-      if (keys.length > 0) {
-        for (const k of keys) parsed[Number(k)] = data[k];
-      }
-    }
-    return parsed;
-  });
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  // ✅ Nova persistência: localStorage + API + versionamento
+  const {
+    slideOrder,
+    textOverrides,
+    saveStatus,
+    handleTextChange,
+    handleSave,
+    handleReorder,
+  } = useSlideStorage(TOTAL_SLIDES, initialOverridesData);
 
   const updateScale = useCallback(() => {
     if (!containerRef.current) return;
@@ -230,33 +217,6 @@ const Index = () => {
     window.addEventListener("resize", updateScale);
     return () => window.removeEventListener("resize", updateScale);
   }, [updateScale]);
-
-  // Em dev, garantimos a leitura atualizada via API caso exista. Em prod, silenciosamente falha e usa os iniciais.
-  useEffect(() => {
-    fetch("/api/slide-overrides")
-      .then((r) => r.json())
-      .then((data) => {
-        if (!data || typeof data !== "object") return;
-
-        if (data.textOverrides) {
-          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
-          for (const k of Object.keys(data.textOverrides)) {
-            parsed[Number(k)] = data.textOverrides[k];
-          }
-          setTextOverrides(parsed);
-        } else {
-          const parsed: { [slideIndex: number]: { [field: string]: string } } = {};
-          const keys = Object.keys(data).filter((k: string) => k !== "slideOrder" && k !== "default");
-          if (keys.length > 0) {
-            for (const k of keys) setTextOverrides(prev => ({ ...prev, [Number(k)]: data[k] }));
-          }
-        }
-        if (Array.isArray(data.slideOrder) && data.slideOrder.length === TOTAL_SLIDES) {
-          setSlideOrder(data.slideOrder);
-        }
-      })
-      .catch(() => { });
-  }, []);
 
   useEffect(() => {
     const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -280,43 +240,6 @@ const Index = () => {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen();
   }, []);
-
-  const handleTextChange = useCallback((slideIndex: number, field: string, value: string) => {
-    setTextOverrides(prev => ({
-      ...prev,
-      [slideIndex]: { ...prev[slideIndex], [field]: value },
-    }));
-  }, []);
-
-  const handleSave = useCallback(async (overrides?: typeof textOverrides, order?: number[]) => {
-    setSaveStatus("saving");
-    const payload = {
-      slideOrder: order ?? slideOrder,
-      textOverrides: overrides ?? textOverrides,
-    };
-    try {
-      const res = await fetch("/api/slide-overrides", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        setSaveStatus("saved");
-        setTimeout(() => setSaveStatus("idle"), 3000);
-      } else {
-        setSaveStatus("error");
-        setTimeout(() => setSaveStatus("idle"), 3000);
-      }
-    } catch {
-      setSaveStatus("error");
-      setTimeout(() => setSaveStatus("idle"), 3000);
-    }
-  }, [textOverrides, slideOrder]);
-
-  const handleReorder = useCallback((newOrder: number[]) => {
-    setSlideOrder(newOrder);
-    handleSave(textOverrides, newOrder);
-  }, [handleSave, textOverrides]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
