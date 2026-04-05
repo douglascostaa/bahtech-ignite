@@ -33,9 +33,10 @@
   ],
   "textOverrides": {
     "0": {
+      "desc": "teste",
       "title": "Da Sala de Aula ao CNPJ 🚀",
-      "desc": "",
-      "role": "CEO & Founder, BahTech | Engenheiro de Computação"
+      "role": "CEO & Founder, BahTech | Engenheiro de Computação",
+      "subtitle": "BahTech • 2026"
     },
     "1": {
       "quote": "Criamos uma agência para desenvolver sites utilizando WordPress sem saber programar. E sem saber vender."
@@ -44,7 +45,7 @@
       "title": "Momento de empreender 100%"
     },
     "29": {
-      "desc": "Tenho um medo de ficar pra trás e isso me faz buscar, estudar e construir sem parar."
+      "desc": "Tenho um medo  de ficar pra trás e isso me faz buscar, estudar e construir sem parar."
     }
   }
 }
